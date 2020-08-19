@@ -3,4 +3,6 @@ const headers = {
     'Content-Type': 'application/json'
 };
 
-export default headers;
+const baseUrl = 'https://mesto.nomoreparties.co/v1/cohort-13';
+
+export {headers, baseUrl};

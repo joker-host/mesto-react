@@ -1,11 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
-import { api } from '../utils/Api.js';
+import { api } from '../utils/api.js';
 import Card from './Card';
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardImage}) {
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardImageClick }) {
 
-  const [userName, setuserName] = useState('');
+  const [userName, setUserName] = useState('');
   const [userDescription, setUserDescription] = useState('');
   const [userAvatar, setUserAvatar] = useState('');
 
@@ -13,18 +13,24 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardImage}) {
 
   React.useEffect(() => {
     api.getUserInfo()
-    .then(res => {
-      setuserName(res.name);
-      setUserDescription(res.about);
-      setUserAvatar(res.avatar);
-    })
-  }, [cards])
+      .then(res => {
+        setUserName(res.name);
+        setUserDescription(res.about);
+        setUserAvatar(res.avatar);
+      })
+      .catch(() => {
+        console.error('error');
+      })
+  }, [])
 
   React.useEffect(() => {
     api.getInitialCards()
-    .then(data => {
-      setCards(data);
-    })
+      .then(data => {
+        setCards(data);
+      })
+      .catch(() => {
+        console.error('error');
+      })
   }, [])
 
 
@@ -33,7 +39,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardImage}) {
       <section className="profile">
         <div className="profile__avatar-wrapper" onClick={onEditAvatar}>
           <div className="profile__avatar-overlay"></div>
-          <img alt="здесь должна быть аватарка :)" className="profile__avatar" src={userAvatar}/>
+          <img alt="здесь должна быть аватарка :)" className="profile__avatar" src={userAvatar} />
         </div>
         <div className="profile__info">
           <h2 className="profile__author">{userName}</h2>
@@ -44,7 +50,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardImage}) {
       </section>
       <section className="elements">
         {
-          cards.map(({_id, ...props}) => <Card key={_id} onCardClick={onCardImage} {...props}/>)
+          cards.map(({ _id, ...props }) => <Card key={_id} onCardClick={onCardImageClick} {...props} />)
         }
       </section>
     </main>

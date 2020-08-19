@@ -1,17 +1,15 @@
 import React from 'react';
-import deletee from '../images/delete.svg';
+import deleteButton from '../images/delete.svg';
 
 function Card({ name, link, likes, onCardClick }) {
 
-    // console.log({ name, link, likes, onCardClick })
     function handleClick() {
         onCardClick({ name, link });
-        console.log({ name, link })
     }
 
     return (
         <div className="element">
-            <img src={deletee} alt="кнопка delete :)" className="element__delete" />
+            <img src={deleteButton} alt="кнопка delete :)" className="element__delete" />
             <img alt="Упс, кажется вы вставили не рабочую ссылку" className="element__photo" src={link} onClick={handleClick} />
             <div className="element__capture-container">
                 <p className="element__capture">{name}</p>

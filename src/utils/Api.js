@@ -1,13 +1,12 @@
-import headers from './constants.js';
+import {headers, baseUrl} from './constants.js';
 
 class Api {
     constructor(headers) {
-        this.baseUrl = 'https://mesto.nomoreparties.co/v1/cohort-13';
         this._headers = headers;
     }
 
     getInitialCards() {
-        return fetch(`${this.baseUrl}/cards`, {
+        return fetch(`${baseUrl}/cards`, {
             method: 'GET',
             headers: this._headers
         })
@@ -21,7 +20,7 @@ class Api {
     }
 
     getUserInfo() {
-        return fetch(`${this.baseUrl}/users/me`, {
+        return fetch(`${baseUrl}/users/me`, {
             method: 'GET',
             headers: this._headers
         })
@@ -35,7 +34,7 @@ class Api {
     }
 
     setUserUnfo(values) {
-        return fetch(`${this.baseUrl}/users/me`, {
+        return fetch(`${baseUrl}/users/me`, {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify({
@@ -53,7 +52,7 @@ class Api {
     }
 
     addCards(values) {
-        return fetch(`${this.baseUrl}/cards`, {
+        return fetch(`${baseUrl}/cards`, {
             method: 'POST',
             headers: this._headers,
             body: JSON.stringify({
@@ -71,7 +70,7 @@ class Api {
     }
 
     likeCards(idCard) {
-        return fetch(`${this.baseUrl}/cards/likes/${idCard}`, {
+        return fetch(`${baseUrl}/cards/likes/${idCard}`, {
             method: 'PUT',
             headers: this._headers
         })
@@ -85,7 +84,7 @@ class Api {
     }
 
     disLikeCards(idCard) {
-        return fetch(`${this.baseUrl}/cards/likes/${idCard}`, {
+        return fetch(`${baseUrl}/cards/likes/${idCard}`, {
             method: 'DELETE',
             headers: this._headers
         })
@@ -99,7 +98,7 @@ class Api {
     }
 
     deleteCards(idCard) {
-        return fetch(`${this.baseUrl}/cards/${idCard}`, {
+        return fetch(`${baseUrl}/cards/${idCard}`, {
             method: 'DELETE',
             headers: this._headers
         })
@@ -113,7 +112,7 @@ class Api {
     }
 
     changeAvatar(values) {
-        return fetch(`${this.baseUrl}/users/me/avatar`, {
+        return fetch(`${baseUrl}/users/me/avatar`, {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify({

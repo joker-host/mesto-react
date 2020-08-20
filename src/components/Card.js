@@ -2,7 +2,7 @@ import React from 'react';
 import deleteButton from '../images/delete.svg';
 import { UserContext } from '../contexts/CurrentUserContext.js';
 
-function Card({ name, link, likes, owner, _id, onCardClick, onCardLike }) {
+function Card({ name, link, likes, owner, _id, onCardClick, onCardLike, onCardDelete }) {
 
     const userInfo = React.useContext(UserContext);
     
@@ -25,9 +25,13 @@ function Card({ name, link, likes, owner, _id, onCardClick, onCardLike }) {
         onCardLike({ name, link, likes, owner, _id });
     }
 
+    function handleDeleteClick() {
+        onCardDelete({ name, link, likes, owner, _id })
+    }
+
     return (
         <div className="element">
-            <img src={deleteButton} alt="кнопка delete :)" className={cardDeleteButtonClassName} />
+            <img src={deleteButton} alt="кнопка delete :)" className={cardDeleteButtonClassName} onClick={handleDeleteClick}/>
             <img alt="Упс, кажется вы вставили не рабочую ссылку" className="element__photo" src={link} onClick={handleClick} />
             <div className="element__capture-container">
                 <p className="element__capture">{name}</p>

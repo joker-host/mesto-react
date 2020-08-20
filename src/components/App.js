@@ -5,6 +5,8 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+import { api } from '../utils/api.js';
+import { UserContext } from '../contexts/CurrentUserContext.js';
 
 function App() {
 
@@ -40,9 +42,27 @@ function App() {
 
   const [selectedCard, setSelectedCard] = useState(null);
 
+  const [currentUser, setCurrentUser] = useState({
+    name: '',
+    about: '',
+    avatar: '',
+    _id: '',
+    cohort: ''
+  });
+  React.useEffect(() => {
+    api.getUserInfo()
+      .then(res => {
+        setCurrentUser(res);
+      })
+      .catch(() => {
+        console.error('error');
+      })
+  }, [])
+
   return (
     <div className="body">
       <div className="page">
+      <UserContext.Provider value={currentUser}>
         <Header />
         <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onCardImageClick={handleCardClick}/>
         <Footer />
@@ -72,7 +92,7 @@ function App() {
         } />
 
         <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups}/>
-
+      </UserContext.Provider>
       </div>
     </div>
   );

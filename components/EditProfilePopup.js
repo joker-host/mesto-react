@@ -29,10 +29,10 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         e.preventDefault();
         // Передаём значения управляемых компонентов во внешний обработчик
         onUpdateUser({
-          name,
-          about: description,
+            name,
+            about: description,
         });
-      }
+    }
 
     return (
         <PopupWithForm name="profile" title="Редактировать профиль" isOpen={isOpen} onClose={onClose} buttonText={'Сохранить'} onSubmit={handleSubmit}>

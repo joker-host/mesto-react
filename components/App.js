@@ -7,6 +7,7 @@ import ImagePopup from './ImagePopup';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import DeletePopup from './DeletePopup';
 import { api } from '../utils/api.js';
 import { UserContext } from '../contexts/CurrentUserContext.js';
 
@@ -24,6 +25,10 @@ function App() {
     setIsAddPlacePopupOpen(true);
   }
 
+  function handleDeleteCardsClick() {
+    SetIsDeleteCardsPopupOpen(true);
+  }
+
   function handleCardClick(card) { //открывает попап с увеличенной фотографией
     setSelectedCard({
       name: card.name,
@@ -36,11 +41,13 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setSelectedCard(null);
+    SetIsDeleteCardsPopupOpen(false);
   }
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false); // хуки состояния для открытия//закрытия попапов
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isDeleteCardsPopupOpen, SetIsDeleteCardsPopupOpen] = useState(false);
 
   const [selectedCard, setSelectedCard] = useState(null); // хук состояния, запоминающий выбранную карточку, на фотографию которой нажали
 
@@ -63,10 +70,7 @@ function App() {
       })
   }, [])
 
-  ////////////////////////////////////////////////////////////////////////////////////
-
   const [cards, setCards] = useState([]); // актуальный массив с карточками
-  console.log(cards)
 
   React.useEffect(() => { //получение карточек с сервера
     api.getInitialCards()
@@ -105,19 +109,26 @@ function App() {
     }
   }
 
+  const [deleteCard, setDeleteCard] = React.useState({})
+  
   function handleCardDelete(props) { // удаление карточки
-    api.deleteCards(props._id)
+    handleDeleteCardsClick();
+    setDeleteCard(props);
+  }
+
+  function deletedCard(deletedCard) { // удаление карточки
+    api.deleteCards(deletedCard._id)
       .then(res => {
         console.log(res);
-        const newCards = cards.filter(card => card._id != props._id);
+        const newCards = cards.filter(card => card._id != deletedCard._id);
         setCards(newCards);
+        closeAllPopups();
       });
   }
 
   function handleUpdateUser(values) { // изменение информции пользователя
     api.setUserUnfo(values)
       .then(res => {
-        console.log(res);
         setCurrentUser(res);
         closeAllPopups();
       })
@@ -149,10 +160,10 @@ function App() {
           <Footer />
 
           <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-          <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
+          <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
           <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
-          <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
-
+          <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
+          <DeletePopup isOpen={isDeleteCardsPopupOpen} onClose={closeAllPopups} card={deleteCard} onDeleteCard={deletedCard}/>
 
         </div>
       </div>
@@ -161,3 +172,7 @@ function App() {
 }
 
 export default App;
+
+
+
+

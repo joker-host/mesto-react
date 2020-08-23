@@ -1,10 +1,12 @@
 import React from 'react';
+import { useState } from 'react';
 import deleteButton from '../images/delete.svg';
 import { UserContext } from '../contexts/CurrentUserContext.js';
 
-function Card({ name, link, likes, owner, _id, onCardClick, onCardLike, onCardDelete }) {
+function Card({ name, link, likes, owner, _id, onCardClick, onCardLike, onCardDelete, isOpen}) {
 
     const userInfo = React.useContext(UserContext);
+    
     
 
     const isOwn = owner._id === userInfo._id;
@@ -31,7 +33,7 @@ function Card({ name, link, likes, owner, _id, onCardClick, onCardLike, onCardDe
 
     return (
         <div className="element">
-            <img src={deleteButton} alt="кнопка delete :)" className={cardDeleteButtonClassName} onClick={handleDeleteClick}/>
+            <img src={deleteButton} alt="кнопка delete :)" className={cardDeleteButtonClassName} onClick={handleDeleteClick} />
             <img alt="Упс, кажется вы вставили не рабочую ссылку" className="element__photo" src={link} onClick={handleClick} />
             <div className="element__capture-container">
                 <p className="element__capture">{name}</p>

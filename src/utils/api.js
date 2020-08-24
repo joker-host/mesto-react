@@ -1,14 +1,11 @@
 import {headers, baseUrl} from './constants.js';
 
 class Api {
-    constructor(headers) {
-        this._headers = headers;
-    }
-
+    
     getInitialCards() {
         return fetch(`${baseUrl}/cards`, {
             method: 'GET',
-            headers: this._headers
+            headers: headers
         })
         .then(result => {
             if (result.ok) {
@@ -22,7 +19,7 @@ class Api {
     getUserInfo() {
         return fetch(`${baseUrl}/users/me`, {
             method: 'GET',
-            headers: this._headers
+            headers: headers
         })
         .then(result => {   
             if (result.ok) {
@@ -36,7 +33,7 @@ class Api {
     setUserUnfo(values) {
         return fetch(`${baseUrl}/users/me`, {
             method: 'PATCH',
-            headers: this._headers,
+            headers: headers,
             body: JSON.stringify({
                 name: values.name,
                 about: values.about
@@ -54,9 +51,9 @@ class Api {
     addCards(values) {
         return fetch(`${baseUrl}/cards`, {
             method: 'POST',
-            headers: this._headers,
+            headers: headers,
             body: JSON.stringify({
-                name: values.title,
+                name: values.name,
                 link: values.link
             })
         })
@@ -72,7 +69,7 @@ class Api {
     likeCards(idCard) {
         return fetch(`${baseUrl}/cards/likes/${idCard}`, {
             method: 'PUT',
-            headers: this._headers
+            headers: headers
         })
         .then(result => {
             if (result.ok) {
@@ -86,7 +83,7 @@ class Api {
     disLikeCards(idCard) {
         return fetch(`${baseUrl}/cards/likes/${idCard}`, {
             method: 'DELETE',
-            headers: this._headers
+            headers: headers
         })
         .then(result => {
             if (result.ok) {
@@ -100,7 +97,7 @@ class Api {
     deleteCards(idCard) {
         return fetch(`${baseUrl}/cards/${idCard}`, {
             method: 'DELETE',
-            headers: this._headers
+            headers: headers
         })
         .then(result => {
             if (result.ok) {
@@ -114,9 +111,9 @@ class Api {
     changeAvatar(values) {
         return fetch(`${baseUrl}/users/me/avatar`, {
             method: 'PATCH',
-            headers: this._headers,
+            headers: headers,
             body: JSON.stringify({
-              avatar: values.link
+              avatar: values.avatarUrl
             })
           })
         .then(result => {
@@ -129,6 +126,6 @@ class Api {
     }
 }
 
-const api = new Api(headers);
+const api = new Api();
 
 export { api };

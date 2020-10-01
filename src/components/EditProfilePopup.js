@@ -22,7 +22,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, loadingIndicator}) {
         setDescription(e.target.value);
     }
 
-    function handleSubmit(e) {
+    function handleSubmit(e) {  
         // Запрещаем браузеру переходить по адресу формы
         e.preventDefault();
         // Передаём значения управляемых компонентов во внешний обработчик

@@ -2,10 +2,10 @@ import React from 'react';
 import Card from './Card';
 import { UserContext } from '../contexts/CurrentUserContext.js';
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardImageClick, onCardDelete, onCardLike, cards}) {
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardImageClick, onCardDelete, onCardLike, cards, loadingIndicator }) {
 
   const userInfo = React.useContext(UserContext);
-
+  
   return (
     <main className="content">
       <section className="profile">
@@ -25,7 +25,8 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardImageClick, onCar
           cards.map(({ _id, ...props }) => <Card key={_id} _id={_id} 
             onCardClick={onCardImageClick} 
             onCardLike={onCardLike} 
-            onCardDelete={onCardDelete} 
+            onCardDelete={onCardDelete}
+            loadingIndicator={loadingIndicator}
             {...props} />)
         }
       </section>

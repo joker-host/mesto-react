@@ -2,11 +2,9 @@ import React from 'react';
 import deleteButton from '../images/delete.svg';
 import { UserContext } from '../contexts/CurrentUserContext.js';
 
-function Card({ name, link, likes, owner, _id, onCardClick, onCardLike, onCardDelete, isOpen}) {
+function Card({ name, link, likes, owner, _id, onCardClick, onCardLike, onCardDelete, loadingIndicator }) {
 
     const userInfo = React.useContext(UserContext);
-    
-    
 
     const isOwn = owner._id === userInfo._id;
     const cardDeleteButtonClassName = (
@@ -37,7 +35,7 @@ function Card({ name, link, likes, owner, _id, onCardClick, onCardLike, onCardDe
             <div className="element__capture-container">
                 <p className="element__capture">{name}</p>
                 <div className="element__like-container">
-                    <button type="button" className={cardLikeButtonClassName} onClick={handleLikeClick}/>
+                    <button type="button" className={cardLikeButtonClassName} onClick={handleLikeClick} disabled={loadingIndicator}/>
                     <p className="element__like-counter">{likes.length}</p>
                 </div>
             </div>

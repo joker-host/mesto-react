@@ -6,6 +6,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, loadingIndicator }) 
     const avatarInputRef = React.useRef();
 
     function handleSubmit(e) {
+        
         // Запрещаем браузеру переходить по адресу формы
         e.preventDefault();
         // Передаём значения управляемых компонентов во внешний обработчик

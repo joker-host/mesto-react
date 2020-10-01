@@ -13,6 +13,10 @@ import { UserContext } from '../contexts/CurrentUserContext.js';
 
 function App() {
 
+  const userInfo = React.useContext(UserContext);
+
+  
+
   function handleEditAvatarClick() { //открывает попап с аватаром
     setIsEditAvatarPopupOpen(true);
   }
@@ -93,7 +97,7 @@ function App() {
   }
   
   function handleCardLike(props) {  //лайк/дизлайк карточки
-
+    setIsLoading(true)
     const isLiked = props.likes.some(i => i._id === currentUser._id);
 
     if (!isLiked) {
@@ -101,12 +105,14 @@ function App() {
         .then((newCard) => {
           const newCards = cards.map((item) => item._id === props._id ? newCard : item);
           setCards(newCards);
+          setIsLoading(false);
         })
     } else {
       api.disLikeCards(props._id)
         .then((newCard) => {
           const newCards = cards.map((item) => item._id === props._id ? newCard : item);
           setCards(newCards);
+          setIsLoading(false);
         })
     }
   }
@@ -133,9 +139,8 @@ function App() {
     setIsLoading(true)
     api.setUserUnfo(values)
       .then(res => {
-        setIsLoading(true);
         setCurrentUser(res);
-        setIsLoading(false)
+        setIsLoading(false);
         closeAllPopups();
       })
   }
@@ -152,6 +157,7 @@ function App() {
 
 
   const [isloading, setIsLoading] = React.useState(false);
+  // console.log(isloading)
 
   return (
     <UserContext.Provider value={currentUser}>
@@ -160,6 +166,7 @@ function App() {
 
           <Header />
           <Main
+            loadingIndicator={isloading} 
             onEditProfile={handleEditProfileClick}
             onAddPlace={handleAddPlaceClick}
             onEditAvatar={handleEditAvatarClick}
